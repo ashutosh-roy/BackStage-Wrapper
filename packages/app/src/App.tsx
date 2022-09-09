@@ -33,9 +33,23 @@ import { FlatRoutes } from '@backstage/core-app-api';
 import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { PermissionedRoute } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import { twTheme } from './components/themes/twTheme';
+import LightIcon from '@material-ui/icons/WbSunny';
 
 const app = createApp({
   apis,
+  themes: [{
+    id: 'my-theme',
+    title: 'My Custom Theme',
+    variant: 'light',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <ThemeProvider theme={twTheme}>
+        <CssBaseline>{children}</CssBaseline>
+      </ThemeProvider>
+    ),
+  }],
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
