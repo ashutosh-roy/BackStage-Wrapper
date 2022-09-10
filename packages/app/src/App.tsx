@@ -37,8 +37,10 @@ import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { twTheme } from './components/themes/twTheme';
 import LightIcon from '@material-ui/icons/WbSunny';
 import { HomePage } from '../src/components/home/home';
-// eslint-disable-next-line import/newline-after-import
 import { HomepageCompositionRoot } from '@backstage/plugin-home';
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { SignInPage } from '@backstage/core-components';
+
 const app = createApp({
   apis,
   themes: [{
@@ -52,6 +54,20 @@ const app = createApp({
       </ThemeProvider>
     ),
   }],
+  components: {
+    SignInPage: props => (
+      <SignInPage
+        {...props}
+        auto
+        provider={{
+          id: 'github-auth-provider',
+          title: 'GitHub',
+          message: 'Sign in using Github',
+          apiRef: githubAuthApiRef,
+        }}
+      />
+    )
+  },
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
