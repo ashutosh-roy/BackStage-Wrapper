@@ -36,7 +36,9 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { twTheme } from './components/themes/twTheme';
 import LightIcon from '@material-ui/icons/WbSunny';
-
+import { HomePage } from '../src/components/home/home';
+// eslint-disable-next-line import/newline-after-import
+import { HomepageCompositionRoot } from '@backstage/plugin-home';
 const app = createApp({
   apis,
   themes: [{
@@ -72,6 +74,9 @@ const AppRouter = app.getRouter();
 
 const routes = (
   <FlatRoutes>
+    <Route path="/" element={<HomepageCompositionRoot />}>
+      <HomePage />
+    </Route>
     <Navigate key="/" to="catalog" />
     <Route path="/catalog" element={<CatalogIndexPage />} />
     <Route
